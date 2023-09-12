@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.bsp.admin.user.mapper.UserMapper">
+
+<!--    <select id="insert" parameterType="User">-->
+<!--        select * from user where t_id = #{tid} and t_password = #{tpassword}-->
+<!--    </select>-->
+
+    <insert id="insert" parameterType="User"  useGeneratedKeys="true" keyProperty="user_id">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="user_id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into sys_user values(null,#{username},#{password},#{name},#{rights},#{role_id},#{last_login}
+            ,#{ip},#{status},#{bz},#{skin},#{email},#{number},#{phone},#{man_buyer_id})
+    </insert>
+
+
+    <update id="update" parameterType="User">
+        update sys_user set username = #{username},password = #{password},name = #{name},rights = #{rights},role_id = #{role_id},
+         last_login= #{last_login} ,ip = #{ip},status = #{status},bz = #{bz},skin = #{skin},email = #{email}
+          ,number = #{number},phone = #{phone} ,man_buyer_id = #{man_buyer_id} where user_id = #{user_id}
+    </update>
+
+    <update id="updateBasicInfo" parameterType="User">
+        update sys_user set name = #{name}, email = #{email}
+          ,phone = #{phone} where user_id = #{user_id}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from sys_user where user_id = #{user_id}
+    </delete>
+
+    <select id="getById" parameterType="java.lang.Integer" resultType="User" >
+        select * from sys_user where user_id = #{userid}
+    </select>
+
+    <select id="getAll" resultType="User">
+        select * from sys_user
+    </select>
+
+    <select id="getAllByFilter" parameterType="java.util.Map" resultType="User">
+        select * from sys_user where username = #{username} and password = #{password}
+    </select>
+
+    <select id="getByUsername" parameterType="java.lang.String" resultType="User">
+        select * from sys_user where username = #{username}
+    </select>
+
+    <select id="getBuyerOrSeller" parameterType="java.util.Map" resultType="User">
+        select * from sys_user where man_buyer_id = #{man_buyer_id} and role_id = #{role_id}
+    </select>
+
+
+</mapper>

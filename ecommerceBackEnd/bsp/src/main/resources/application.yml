@@ -1,0 +1,68 @@
+server:
+  port: 8088
+filePath: /root/photo
+
+
+
+
+spring:
+  jackson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/aliyun?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    initialSize: 5
+
+    minIdle: 2
+
+    maxActive: 20
+
+    maxWait: 60000
+
+    timeBetweenEvictionRunsMillis: 60000
+
+    minEvictableIdleTimeMillis: 300000
+
+    validationQuery: SELECT 1 FROM DUAL
+
+    testWhileIdle: true
+
+    testOnBorrow: false
+
+    testOnReturn: false
+
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+
+    filters: stat,wall,slf4j
+
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+    useGlobalDataSourceStat: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    cache:
+      redis:
+        time-to-live: 60000
+#  security:
+#    basic:
+#      enabled: false
+#    management:
+#      security:
+#        enabled: false
+
+mybatis:
+  mapper-locations: classpath:mappers/*/*.xml, classpath:mapper/*/*/*.xml
+  type-aliases-package: com.neusoft.bsp.*.*.po, com.neusoft.bsp.*.po
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
